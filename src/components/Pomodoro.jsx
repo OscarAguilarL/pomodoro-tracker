@@ -87,7 +87,7 @@ export const Pomodoro = () => {
   return (
     <Container>
       <h1>Pomodoro Tracker</h1>
-      <ProgressBar value={pomodoroSession} />
+      <ProgressBar value={pomodoroSession} isRunning={isRunning} />
       <ButtonDiv>
         <Button
           color={`${isRunning ? '--trailColor' : '--white'}`}

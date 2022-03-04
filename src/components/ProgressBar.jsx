@@ -18,7 +18,7 @@ const MinutesLabel = styled.p`
   color: var(${(props) => (props.isPaused ? '--green' : '--pink')});
 `;
 
-export const ProgressBar = ({ isPaused = true, value }) => {
+export const ProgressBar = ({ isRunning = true, value }) => {
   const clock = useClock(value);
 
   return (
@@ -28,14 +28,14 @@ export const ProgressBar = ({ isPaused = true, value }) => {
         minValue={0}
         maxValue={1500}
         styles={buildStyles({
-          pathColor: isPaused ? 'var(--green)' : 'var(--pink)',
+          pathColor: !isRunning ? 'var(--green)' : 'var(--pink)',
           trailColor: 'var(--trailColor)',
-          textColor: isPaused ? 'var(--green)' : 'var(--pink)',
+          textColor: !isRunning ? 'var(--green)' : 'var(--pink)',
           strokeLinecap: 'round',
         })}
         strokeWidth="5"
       >
-        <MinutesLabel isPaused={isPaused}>{clock}</MinutesLabel>
+        <MinutesLabel isPaused={!isRunning}>{clock}</MinutesLabel>
       </CircularProgressbarWithChildren>
     </ProgressContainer>
   );
