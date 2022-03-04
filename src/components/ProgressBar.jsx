@@ -14,29 +14,29 @@ const MinutesLabel = styled.p`
   font: var(--time);
   padding: 0;
   margin: 0;
-  color: var(--pink);
+  color: var(${(props) => (props.isPaused ? '--green' : '--pink')});
 `;
 
 const StatusLabel = styled.p`
   font: var(--button);
-  color: var(--pink);
+  color: var(${(props) => (props.isPaused ? '--green' : '--pink')});
 `;
 
-export const ProgressBar = () => {
+export const ProgressBar = ({ isPaused = true }) => {
   return (
     <ProgressContainer>
       <CircularProgressbarWithChildren
         value={50}
         styles={buildStyles({
-          pathColor: '#e046d7',
+          pathColor: isPaused ? '#3ab499' : '#e046d7',
           trailColor: '#E046D733',
-          textColor: '#e046d7',
+          textColor: isPaused ? '#3ab499' : '#e046d7',
           strokeLinecap: 'round',
         })}
         strokeWidth="5"
       >
-        <MinutesLabel>14:00</MinutesLabel>
-        <StatusLabel>Session paused</StatusLabel>
+        <MinutesLabel isPaused={isPaused}>14:00</MinutesLabel>
+        <StatusLabel isPaused={isPaused}>Session paused</StatusLabel>
       </CircularProgressbarWithChildren>
     </ProgressContainer>
   );
