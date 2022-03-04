@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ProgressBar } from './ProgressBar';
 
 const Container = styled.main`
   inline-size: 21.25rem;
@@ -7,7 +8,9 @@ const Container = styled.main`
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  gap: 1.75rem;
+  padding-top: 1.25rem;
   box-shadow: var(--boxShadow);
   font: var(--title);
 `;
@@ -29,7 +32,7 @@ const Button = styled.button`
   background-color: var(--Bg);
   color: var(${(props) => props.color});
   cursor: pointer;
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 
   &:active {
     transform: scale(0.95);
@@ -40,7 +43,7 @@ export const Pomodoro = () => {
   return (
     <Container>
       <h1>Pomodoro Tracker</h1>
-      <div>grafica</div>
+      <ProgressBar />
       <ButtonDiv>
         <Button color="--white" type="button">
           Start Break
