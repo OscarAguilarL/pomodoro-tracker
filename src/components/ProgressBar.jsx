@@ -28,9 +28,9 @@ export const ProgressBar = ({ isPaused = true }) => {
       <CircularProgressbarWithChildren
         value={50}
         styles={buildStyles({
-          pathColor: isPaused ? '#3ab499' : '#e046d7',
-          trailColor: '#E046D733',
-          textColor: isPaused ? '#3ab499' : '#e046d7',
+          pathColor: isPaused ? 'var(--green)' : 'var(--pink)',
+          trailColor: 'var(--trailColor)',
+          textColor: isPaused ? 'var(--green)' : 'var(--pink)',
           strokeLinecap: 'round',
         })}
         strokeWidth="5"

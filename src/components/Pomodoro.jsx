@@ -33,6 +33,7 @@ const Button = styled.button`
   color: var(${(props) => props.color});
   cursor: pointer;
   transition: transform 0.3s ease;
+  border-radius: 8px;
 
   &:active {
     transform: scale(0.95);
