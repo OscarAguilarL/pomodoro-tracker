@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Pomodoro } from './components/Pomodoro';
 import { useWindowDimensions } from './hooks/useWindowDimensions';
 
 const Container = styled.div`
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <Container height={height}>
-      <h1>Desde app</h1>
+      <Pomodoro />
     </Container>
   );
 }
