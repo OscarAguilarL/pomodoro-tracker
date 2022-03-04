@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { ProgressBar } from './ProgressBar';
 
@@ -50,12 +50,13 @@ const POMODORO_BREAK = 5 * 60;
 
 export const Pomodoro = () => {
   const [pomodoroSession, setPomodoroSession] = useState(POMODORO_SESSION);
-  const [pomodoroBreak, setPomodoroBreak] = useState(POMODORO_BREAK);
+  const [pomodoroBreak, setPomodoroBreak] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const interval = useRef(null);
 
   const handleStartPomodoro = () => {
     setIsRunning(true);
+    setPomodoroBreak(false);
     interval.current = setInterval(() => {
       setPomodoroSession((prevState) => prevState - 1);
     }, 1000);
@@ -68,34 +69,45 @@ export const Pomodoro = () => {
     }
   };
 
-  // useEffect(() => {}, []);
+  const startBreak = () => {
+    interval.current = setInterval(() => {
+      setPomodoroSession((prevState) => prevState - 1);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (Number(pomodoroSession) <= 0) {
+      window.clearInterval(interval.current);
+      setPomodoroSession(pomodoroBreak ? POMODORO_BREAK : POMODORO_SESSION);
+      setPomodoroBreak(!pomodoroBreak);
+      startBreak();
+    }
+  }, [pomodoroSession]);
 
   return (
-    <>
-      <Container>
-        <h1>Pomodoro Tracker</h1>
-        <ProgressBar value={pomodoroSession} />
-        <ButtonDiv>
-          <Button
-            color={`${isRunning ? '--trailColor' : '--white'}`}
-            type="button"
-            onClick={handleStartPomodoro}
-            disabled={isRunning}
-          >
-            {isRunning ? 'Start' : 'Resume'}
-            Pomodoro
-          </Button>
-          <Button
-            color={`${isRunning ? '--red' : '--trailColor'}`}
-            type="button"
-            onClick={handlePausePomodoro}
-            disabled={!isRunning}
-          >
-            {isRunning ? 'Pause' : 'Resume'}
-            Pomodoro
-          </Button>
-        </ButtonDiv>
-      </Container>
-    </>
+    <Container>
+      <h1>Pomodoro Tracker</h1>
+      <ProgressBar value={pomodoroSession} />
+      <ButtonDiv>
+        <Button
+          color={`${isRunning ? '--trailColor' : '--white'}`}
+          type="button"
+          onClick={handleStartPomodoro}
+          disabled={isRunning}
+        >
+          {isRunning ? 'Start' : 'Resume'}{' '}
+          {!pomodoroBreak ? 'Break' : 'Pomodoro'}
+        </Button>
+        <Button
+          color={`${isRunning ? '--red' : '--trailColor'}`}
+          type="button"
+          onClick={handlePausePomodoro}
+          disabled={!isRunning}
+        >
+          {isRunning ? 'Pause' : 'Resume'}{' '}
+          {!pomodoroBreak ? 'Break' : 'Pomodoro'}
+        </Button>
+      </ButtonDiv>
+    </Container>
   );
 };
