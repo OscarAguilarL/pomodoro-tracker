@@ -7,12 +7,13 @@
   --pink: #e046d7;
   --green: #3ab499;
   --bg: #172030;
-  --trailColor: #E046D733;
+  --trailColor: #e046d733;
   --white: #ffffff;
   --red: #f94409;
   --button: #172030;
   --button: normal 500 1rem/1rem Roboto;
   --title: normal 700 1rem/1.75rem Roboto;
+  --time: 400 4rem/4.75rem Roboto;
 }
 
 body {

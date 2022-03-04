@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -8,6 +8,18 @@ const ProgressContainer = styled.div`
   max-width: 15rem;
   max-height: 15rem;
   padding: 0 3.25rem;
+`;
+
+const MinutesLabel = styled.p`
+  font: var(--time);
+  padding: 0;
+  margin: 0;
+  color: var(--pink);
+`;
+
+const StatusLabel = styled.p`
+  font: var(--button);
+  color: var(--pink);
 `;
 
 export const ProgressBar = () => {
@@ -23,8 +35,8 @@ export const ProgressBar = () => {
         })}
         strokeWidth="5"
       >
-        <h2>14:00</h2>
-        <p>Session paused</p>
+        <MinutesLabel>14:00</MinutesLabel>
+        <StatusLabel>Session paused</StatusLabel>
       </CircularProgressbarWithChildren>
     </ProgressContainer>
   );
