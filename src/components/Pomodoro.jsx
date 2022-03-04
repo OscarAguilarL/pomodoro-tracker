@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { ProgressBar } from './ProgressBar';
 
@@ -38,21 +39,63 @@ const Button = styled.button`
   &:active {
     transform: scale(0.95);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
+const POMODORO_SESSION = 25 * 60;
+const POMODORO_BREAK = 5 * 60;
+
 export const Pomodoro = () => {
+  const [pomodoroSession, setPomodoroSession] = useState(POMODORO_SESSION);
+  const [pomodoroBreak, setPomodoroBreak] = useState(POMODORO_BREAK);
+  const [isRunning, setIsRunning] = useState(false);
+  const interval = useRef(null);
+
+  const handleStartPomodoro = () => {
+    setIsRunning(true);
+    interval.current = setInterval(() => {
+      setPomodoroSession((prevState) => prevState - 1);
+    }, 1000);
+  };
+
+  const handlePausePomodoro = () => {
+    if (isRunning) {
+      window.clearInterval(interval.current);
+      setIsRunning(false);
+    }
+  };
+
+  // useEffect(() => {}, []);
+
   return (
-    <Container>
-      <h1>Pomodoro Tracker</h1>
-      <ProgressBar />
-      <ButtonDiv>
-        <Button color="--white" type="button">
-          Start Break
-        </Button>
-        <Button color="--red" type="button">
-          Resume Pomodoro
-        </Button>
-      </ButtonDiv>
-    </Container>
+    <>
+      <Container>
+        <h1>Pomodoro Tracker</h1>
+        <ProgressBar value={pomodoroSession} />
+        <ButtonDiv>
+          <Button
+            color={`${isRunning ? '--trailColor' : '--white'}`}
+            type="button"
+            onClick={handleStartPomodoro}
+            disabled={isRunning}
+          >
+            {isRunning ? 'Start' : 'Resume'}
+            Pomodoro
+          </Button>
+          <Button
+            color={`${isRunning ? '--red' : '--trailColor'}`}
+            type="button"
+            onClick={handlePausePomodoro}
+            disabled={!isRunning}
+          >
+            {isRunning ? 'Pause' : 'Resume'}
+            Pomodoro
+          </Button>
+        </ButtonDiv>
+      </Container>
+    </>
   );
 };

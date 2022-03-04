@@ -3,6 +3,7 @@ import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from 'react-circular-progressbar';
+import { useClock } from '../hooks/useClock.js';
 
 const ProgressContainer = styled.div`
   max-width: 15rem;
@@ -12,21 +13,20 @@ const ProgressContainer = styled.div`
 
 const MinutesLabel = styled.p`
   font: var(--time);
-  padding: 0;
+  padding-bottom: 2rem;
   margin: 0;
   color: var(${(props) => (props.isPaused ? '--green' : '--pink')});
 `;
 
-const StatusLabel = styled.p`
-  font: var(--button);
-  color: var(${(props) => (props.isPaused ? '--green' : '--pink')});
-`;
+export const ProgressBar = ({ isPaused = true, value }) => {
+  const clock = useClock(value);
 
-export const ProgressBar = ({ isPaused = true }) => {
   return (
     <ProgressContainer>
       <CircularProgressbarWithChildren
-        value={50}
+        value={value}
+        minValue={0}
+        maxValue={1500}
         styles={buildStyles({
           pathColor: isPaused ? 'var(--green)' : 'var(--pink)',
           trailColor: 'var(--trailColor)',
@@ -35,8 +35,7 @@ export const ProgressBar = ({ isPaused = true }) => {
         })}
         strokeWidth="5"
       >
-        <MinutesLabel isPaused={isPaused}>14:00</MinutesLabel>
-        <StatusLabel isPaused={isPaused}>Session paused</StatusLabel>
+        <MinutesLabel isPaused={isPaused}>{clock}</MinutesLabel>
       </CircularProgressbarWithChildren>
     </ProgressContainer>
   );
