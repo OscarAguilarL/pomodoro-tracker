@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { ProgressBar } from './ProgressBar';
 
+import bell from '../audio/bell.mp3';
+
 const Container = styled.main`
   inline-size: 21.25rem;
   block-size: 32.5rem;
@@ -77,6 +79,8 @@ export const Pomodoro = () => {
 
   useEffect(() => {
     if (Number(pomodoroSession) <= 0) {
+      const notification = new Audio(bell);
+      notification.play();
       window.clearInterval(interval.current);
       setPomodoroSession(pomodoroBreak ? POMODORO_BREAK : POMODORO_SESSION);
       setPomodoroBreak(!pomodoroBreak);
@@ -95,8 +99,8 @@ export const Pomodoro = () => {
           onClick={handleStartPomodoro}
           disabled={isRunning}
         >
-          {isRunning ? 'Start' : 'Resume'}{' '}
-          {!pomodoroBreak ? 'Break' : 'Pomodoro'}
+          {!isRunning ? 'Start' : 'Resume'}{' '}
+          Pomodoro
         </Button>
         <Button
           color={`${isRunning ? '--red' : '--trailColor'}`}
@@ -105,7 +109,7 @@ export const Pomodoro = () => {
           disabled={!isRunning}
         >
           {isRunning ? 'Pause' : 'Resume'}{' '}
-          {!pomodoroBreak ? 'Break' : 'Pomodoro'}
+          Pomodoro
         </Button>
       </ButtonDiv>
     </Container>
